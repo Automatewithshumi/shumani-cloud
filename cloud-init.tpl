@@ -29,7 +29,7 @@ cat > /var/www/html/index.html <<'HTML'
       <p>I build projects and share them on GitHub. This website is served by Nginx on Ubuntu.</p>
       <p>See my work here:</p>
       <div class="links">
-        <a href="https://github.com/${github_username}" target="_blank">GitHub: ${github_username}</a>
+        <a href="https://github.com/Automatewithshumi/shumani-cloud/tree/main" target="_blank">GitHub Branch: main</a>
       </div>
     </div>
     <div class="card">

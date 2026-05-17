@@ -32,6 +32,7 @@ Simple Terraform configuration to deploy:
 ## Access the website
 - After apply, Terraform outputs `website_url`
 - Open that URL in your browser to see the deployed page
+- Live site: http://20.164.212.224
 
 ## Notes
 - This is a simple demo deployment for learning Terraform and Azure.
