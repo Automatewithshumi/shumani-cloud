@@ -11,7 +11,7 @@ variable "admin_username" {
 }
 
 variable "admin_password" {
-  default = "P@ssw0rd12345!"
+  default = "NewStrongPassword123!"
 }
 
 variable "github_username" {
