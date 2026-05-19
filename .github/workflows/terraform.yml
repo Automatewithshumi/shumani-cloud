@@ -1,6 +1,5 @@
 name: Terraform CI/CD
 
-
 on:
   push:
     branches:
@@ -13,11 +12,12 @@ jobs:
 
     steps:
       - name: Checkout Code
-          - name: Azure Login
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
         uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
