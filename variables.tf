@@ -9,3 +9,8 @@ variable "location" {
 variable "vm_admin_username" {
   default = "azureuser"
 }
+
+variable "public_ssh_key" {
+  description = "SSH Public Key"
+  type        = string
+}
