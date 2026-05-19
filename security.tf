@@ -1,11 +1,11 @@
 resource "azurerm_network_security_group" "nsg" {
-  name                = "terraform-nsg"
+  name                = "vm-nsg"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
   security_rule {
     name                       = "Allow-SSH"
-    priority                   = 1000
+    priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
@@ -17,7 +17,7 @@ resource "azurerm_network_security_group" "nsg" {
 
   security_rule {
     name                       = "Allow-HTTP"
-    priority                   = 1001
+    priority                   = 110
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
