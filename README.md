@@ -83,12 +83,14 @@ Linux VM provisioning
 Nginx web servers
 High availability architecture
 Cost optimization via auto shutdown
+
 ⚠️ Important Notes
 Public IP is temporary (Azure Free Tier limitation)
 Infrastructure can be recreated anytime via Terraform
 SSH uses port 22
 Web traffic uses port 80
 Designed for learning and portfolio use
+
 💡 Challenges & Solutions
 1. Public IP limit reached
 
