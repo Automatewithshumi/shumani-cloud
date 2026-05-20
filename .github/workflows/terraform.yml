@@ -1,28 +1,42 @@
-terraform:
-  name: Terraform Infrastructure
-  runs-on: ubuntu-latest
+name: Terraform CI/CD
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+on:
+  push:
+    branches:
+      - main
 
-    - name: Azure Login
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+jobs:
+  terraform:
+    name: Terraform Infrastructure
+    runs-on: ubuntu-latest
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Terraform Init
-      run: terraform init
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Terraform Plan
-      env:
-        TF_VAR_public_ssh_key: ${{ secrets.VM_SSH_KEY }}
-      run: terraform plan
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
 
-    - name: Terraform Apply
-      env:
-        TF_VAR_public_ssh_key: ${{ secrets.VM_SSH_KEY }}
-      run: terraform apply -auto-approve
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        env:
+          TF_VAR_public_ssh_key: ${{ secrets.VM_SSH_KEY }}
+        run: terraform plan
+
+      - name: Terraform Apply
+        env:
+          TF_VAR_public_ssh_key: ${{ secrets.VM_SSH_KEY }}
+        run: terraform apply -auto-approve
