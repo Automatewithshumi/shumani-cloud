@@ -39,9 +39,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Docker image locally
-        run: docker build -t my-nginx-app .
-
       - name: Deploy to Azure VM via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -51,5 +48,5 @@ jobs:
           script: |
             docker stop myapp || true
             docker rm myapp || true
-            docker pull my-nginx-app || true
+            docker build -t my-nginx-app .
             docker run -d -p 80:80 --name myapp my-nginx-app
