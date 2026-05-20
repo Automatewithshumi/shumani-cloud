@@ -14,3 +14,4 @@ variable "public_ssh_key" {
   description = "SSH Public Key"
   type        = string
 }
+

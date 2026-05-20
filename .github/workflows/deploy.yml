@@ -1,4 +1,4 @@
-name: Deploy Docker App to Azure VM
+name: Deploy Docker App + Terraform Infra
 
 on:
   push:
@@ -6,14 +6,40 @@ on:
       - main
 
 jobs:
-  deploy:
+  terraform:
+    name: Terraform Infrastructure
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Docker image
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        env:
+          TF_VAR_public_ssh_key: ${{ secrets.VM_SSH_KEY }}
+        run: terraform plan
+
+      - name: Terraform Apply
+        env:
+          TF_VAR_public_ssh_key: ${{ secrets.VM_SSH_KEY }}
+        run: terraform apply -auto-approve
+
+  deploy:
+    name: Deploy Docker App to Azure VM
+    needs: terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image locally
         run: docker build -t my-nginx-app .
 
       - name: Deploy to Azure VM via SSH
@@ -25,5 +51,5 @@ jobs:
           script: |
             docker stop myapp || true
             docker rm myapp || true
-            docker build -t my-nginx-app .
+            docker pull my-nginx-app || true
             docker run -d -p 80:80 --name myapp my-nginx-app
