@@ -1,4 +1,4 @@
-name: Test Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,12 +6,20 @@ on:
       - main
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Test pipeline
-        run: echo "Pipeline is working"
+      - name: Deploy to VM via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: azureuser
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/azureuser/app
+            git pull origin main
+            sudo systemctl restart nginx

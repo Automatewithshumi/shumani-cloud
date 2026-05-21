@@ -1,4 +1,4 @@
-name: Terraform Test
+name: Terraform Dev Test
 
 on:
   push:
@@ -26,3 +26,12 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ./terraform
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./terraform
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./terraform
